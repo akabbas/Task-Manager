@@ -1,0 +1,66 @@
+import React, { useState } from "react";
+
+function TaskForm({ onSubmit }) {
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+    category: "Others",
+    priority: "Medium",
+    dueDate: "",
+  });
+
+  const handleChange = (e) => {
+    setTask({ ...task, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(task);
+    setTask({
+      title: "",
+      description: "",
+      category: "Others",
+      priority: "Medium",
+      dueDate: "",
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="title"
+        placeholder="Task Title"
+        value={task.title}
+        onChange={handleChange}
+        required
+      />
+      <textarea
+        name="description"
+        placeholder="Task Description"
+        value={task.description}
+        onChange={handleChange}
+      />
+      <input
+        type="date"
+        name="dueDate"
+        value={task.dueDate}
+        onChange={handleChange}
+      />
+      <select name="category" value={task.category} onChange={handleChange}>
+        <option value="Work">Work</option>
+        <option value="Personal">Personal</option>
+        <option value="Urgent">Urgent</option>
+        <option value="Others">Others</option>
+      </select>
+      <select name="priority" value={task.priority} onChange={handleChange}>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <button type="submit">Add Task</button>
+    </form>
+  );
+}
+
+export default TaskForm;
